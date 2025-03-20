@@ -11,8 +11,6 @@ env:
 jobs:
   publish:
     runs-on: macos-latest
-    needs:
-      - native-library
 
     steps:
       - uses: actions/checkout@v4
