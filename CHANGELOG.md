@@ -5,6 +5,15 @@
 Nothing yet!
 
 
+## [1.20.0] - 2025-03-20
+[1.20.0]: https://github.com/cashapp/zipline/releases/tag/1.20.0
+
+* New: Add Linux ARM to supported platforms for JVM artifact.
+* JVM native libraries are now cross-compiled with Zig build system. Please report any issues!
+* Upgrade: [Kotlin 2.1.20](https://github.com/JetBrains/kotlin/releases/tag/v2.1.20)
+* Upgrade: [Kotlin Serialization 1.8.0](https://github.com/Kotlin/kotlinx.serialization/releases/tag/v1.8.0).
+
+
 ## [1.19.0] - 2024-12-03
 [1.19.0]: https://github.com/cashapp/zipline/releases/tag/1.19.0
 
