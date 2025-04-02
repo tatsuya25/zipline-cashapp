@@ -2,7 +2,14 @@
 
 ## Unreleased
 
+Nothing yet!
+
+
+## [1.20.1] - 2025-04-02
+[1.20.1]: https://github.com/cashapp/zipline/releases/tag/1.20.1
+
 * Fix: Update source map parser to ECMA 426 which will not fail on the `ignoreList` key and ignore any extensions.
+* Upgrade: [Kotlin Serialization 1.8.1](https://github.com/Kotlin/kotlinx.serialization/releases/tag/v1.8.1).
 
 
 ## [1.20.0] - 2025-03-20
