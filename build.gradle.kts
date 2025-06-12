@@ -177,60 +177,20 @@ allprojects {
     configure<PublishingExtension> {
       repositories {
         maven {
-          name = "testMaven"
-          url = rootProject.layout.buildDirectory.dir("testMaven").get().asFile.toURI()
-        }
-
-        /*
-         * Want to push to an internal repository for testing?
-         * Set the following properties in ~/.gradle/gradle.properties.
-         *
-         * internalUrl=YOUR_INTERNAL_URL
-         * internalUsername=YOUR_USERNAME
-         * internalPassword=YOUR_PASSWORD
-         *
-         * Then run the following command to publish a new internal release:
-         *
-         * ./gradlew publishAllPublicationsToInternalRepository -DRELEASE_SIGNING_ENABLED=false
-         */
-        val internalUrl = providers.gradleProperty("internalUrl").orNull
-        if (internalUrl != null) {
-          maven {
-            name = "internal"
-            url = URI(internalUrl)
-            credentials {
-              username = providers.gradleProperty("internalUsername").get()
-              password = providers.gradleProperty("internalPassword").get()
-            }
+          name = "GitHubPackages"
+          url = URI("https://maven.pkg.github.com/tatsuya25/zipline-cashapp")
+          credentials {
+            username = System.getenv("ORG_GRADLE_PROJECT_githubPackagesUsername")
+            password = System.getenv("ORG_GRADLE_PROJECT_githubPackagesPassword")
           }
         }
       }
     }
     configure<MavenPublishBaseExtension> {
-      publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
-      signAllPublications()
       pom {
         description.set("Runs Kotlin/JS libraries in Kotlin/JVM and Kotlin/Native programs")
         name.set(project.name)
-        url.set("https://github.com/cashapp/zipline/")
-        licenses {
-          license {
-            name.set("The Apache Software License, Version 2.0")
-            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-            distribution.set("repo")
-          }
-        }
-        developers {
-          developer {
-            id.set("cashapp")
-            name.set("Cash App")
-          }
-        }
-        scm {
-          url.set("https://github.com/cashapp/zipline/")
-          connection.set("scm:git:https://github.com/cashapp/zipline.git")
-          developerConnection.set("scm:git:ssh://git@github.com/cashapp/zipline.git")
-        }
+        url.set("https://github.com/tatsuya25/zipline-cashapp/")
       }
     }
   }
