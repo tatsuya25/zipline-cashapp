@@ -62,7 +62,7 @@ configure<SpotlessExtension> {
 }
 
 allprojects {
-  group = "app.cash.zipline"
+  group = "com.github.tatsuya25"
   version = project.property("VERSION_NAME") as String
 
   repositories {
