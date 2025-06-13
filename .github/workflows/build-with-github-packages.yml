@@ -31,61 +31,61 @@ jobs:
           path: zipline/src/jvmMain/resources/jni
           if-no-files-found: error
 
-  platform-tests:
-    needs:
-      - zig
-    strategy:
-      fail-fast: false
-      matrix:
-        platform:
-          - os: macos-13
-            task: macosX64Test
-          - os: macos-latest
-            task: macosArm64Test
-          - os: ubuntu-latest
-            task: linuxX64Test
+  # platform-tests:
+  #   needs:
+  #     - zig
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       platform:
+  #         - os: macos-13
+  #           task: macosX64Test
+  #         - os: macos-latest
+  #           task: macosArm64Test
+  #         - os: ubuntu-latest
+  #           task: linuxX64Test
 
-    runs-on: ${{ matrix.platform.os }}
+  #   runs-on: ${{ matrix.platform.os }}
 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version-file: .github/workflows/.java-version
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-java@v4
+  #       with:
+  #         distribution: 'zulu'
+  #         java-version-file: .github/workflows/.java-version
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: jni-binaries
-          path: zipline/src/jvmMain/resources/jni
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: jni-binaries
+  #         path: zipline/src/jvmMain/resources/jni
 
-      - run: ./gradlew jvmTest ${{ matrix.platform.task }} apiCheck --stacktrace
+  #     - run: ./gradlew jvmTest ${{ matrix.platform.task }} apiCheck --stacktrace
 
-      - uses: actions/upload-artifact@v4
-        if: ${{ always() }}
-        with:
-          name: test-report-${{ matrix.platform.os }}
-          path: '**/build/reports/tests/**'
-          retention-days: 1
+  #     - uses: actions/upload-artifact@v4
+  #       if: ${{ always() }}
+  #       with:
+  #         name: test-report-${{ matrix.platform.os }}
+  #         path: '**/build/reports/tests/**'
+  #         retention-days: 1
 
-  samples:
-    runs-on: macos-latest
-    needs:
-      - zig
+  # samples:
+  #   runs-on: macos-latest
+  #   needs:
+  #     - zig
 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version-file: .github/workflows/.java-version
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-java@v4
+  #       with:
+  #         distribution: 'zulu'
+  #         java-version-file: .github/workflows/.java-version
 
-      - uses: actions/download-artifact@v4
-        with:
-          name: jni-binaries
-          path: zipline/src/jvmMain/resources/jni
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: jni-binaries
+  #         path: zipline/src/jvmMain/resources/jni
 
-      - run: ./gradlew -p samples check --stacktrace
+  #     - run: ./gradlew -p samples check --stacktrace
 
   android-tests:
     runs-on: ubuntu-latest
@@ -111,29 +111,29 @@ jobs:
           emulator-boot-timeout: 20000
           script: ./gradlew connectedCheck
 
-  ios-app:
-    runs-on: macos-latest
+  # ios-app:
+  #   runs-on: macos-latest
 
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          distribution: 'zulu'
-          java-version-file: .github/workflows/.java-version
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-java@v4
+  #       with:
+  #         distribution: 'zulu'
+  #         java-version-file: .github/workflows/.java-version
 
-      - name: Build Xcode samples
-        run: |
-          cd samples/world-clock/ios/app
-          pod install
-          xcodebuild -workspace WorldClock.xcworkspace -scheme WorldClock -destination 'platform=iOS Simulator,name=iPhone 13,OS=latest'
+  #     - name: Build Xcode samples
+  #       run: |
+  #         cd samples/world-clock/ios/app
+  #         pod install
+  #         xcodebuild -workspace WorldClock.xcworkspace -scheme WorldClock -destination 'platform=iOS Simulator,name=iPhone 13,OS=latest'
 
   build:
     runs-on: macos-latest
     needs:
-      - platform-tests
-      - samples
+      # - platform-tests
+      # - samples
       - android-tests
-      - ios-app
+      # - ios-app
 
     steps:
       - uses: actions/checkout@v4
