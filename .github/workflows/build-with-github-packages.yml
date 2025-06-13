@@ -129,7 +129,8 @@ jobs:
 
   build:
     runs-on: macos-latest
-    # needs:
+    needs:
+      - zig
       # - platform-tests
       # - samples
       # - android-tests
